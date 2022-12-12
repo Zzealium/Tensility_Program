@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Myriad Pro</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Tensility</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../../media/sf_Z_DRIVE/favicon-1,favicon-2,favicon-3/favicon-1.png</normaloff>../../../../../media/sf_Z_DRIVE/favicon-1,favicon-2,favicon-3/favicon-1.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Part Number:</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="partNumberSearch">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>10</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="searchButton">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>10</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkboxSpec">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>20</y>
+      <width>92</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>Spec</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkboxAllSpecs">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>40</y>
+      <width>92</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>All Specs</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkboxPicture">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>60</y>
+      <width>92</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Picture</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkboxWeb">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>80</y>
+      <width>92</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Web</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>0</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search Parameters</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSubmit_Bug_Report"/>
+   </widget>
+   <widget class="QMenu" name="menuQA">
+    <property name="title">
+     <string>QA</string>
+    </property>
+    <addaction name="actionConnector"/>
+    <addaction name="actionCable_Assembly"/>
+    <addaction name="actionWire"/>
+    <addaction name="actionPower_Supply"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuQA"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionConnector">
+   <property name="text">
+    <string>Connector</string>
+   </property>
+  </action>
+  <action name="actionCable_Assembly">
+   <property name="text">
+    <string>Cable Assembly</string>
+   </property>
+  </action>
+  <action name="actionWire">
+   <property name="text">
+    <string>Wire</string>
+   </property>
+  </action>
+  <action name="actionAC_Cords">
+   <property name="text">
+    <string>AC Cords</string>
+   </property>
+  </action>
+  <action name="actionPower_Supply">
+   <property name="text">
+    <string>Power Supply</string>
+   </property>
+  </action>
+  <action name="actionSubmit_Bug_Report">
+   <property name="text">
+    <string>Submit Bug Report</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
