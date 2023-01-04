@@ -4,6 +4,8 @@ import os
 import fitz
 import pandas as pd
 import webbrowser
+import shutil
+import datetime
 
 
 def get_Path(model_number):
@@ -69,43 +71,59 @@ def get_Path(model_number):
                             rev += 1
                 counter += 1
         elif pushpull == '51':
-            base_file = lookup(model_number)
-            if os.path.exists(path + base_file):
-                full_path = path + base_file + '/' + model_number
-                if os.path.exists(full_path):
-                    full_path = full_path + '/current/' + model_number + '_revA.pdf'
-                    return full_path
+            # 51's sometimes have nothing at the end. So split breaks the code.
+            # If the model number has nothing at the end it fails and moved to the
+            # except and handles it.
+            try:
+                strip = model_number.split('.')
+                aft = strip[1]
+                base_file = lookup(strip[0])
+                print(base_file) # = 51-00001 - 51-00100
+                print(aft) # = M or 42 or 51
+                fullpath = path + base_file + "/" + model_number +"/current/" + model_number + "_revA.pdf"
+                if os.path.exists(fullpath):
+                    return fullpath
                 else:
-                    full_pathM = full_path + '.M'
-                    if os.path.exists(full_pathM):
-                        full_pathM = full_pathM
-                        openPath(full_pathM + '/current/' + model_number + '.M_revA.pdf')
-                        full_pathD = full_path + '.52'
-                        if os.path.exists(full_pathD):
-                            openPath(full_pathD + '/current/' + model_number + '.52_revA.pdf')
-                        else:
-                            full_pathD = full_pathD + '.42'
-                            openPath(full_pathD + '/current/' + model_number + '.42_revA.pdf')
-
+                    count = 1
+                    while not os.path.exists(fullpath):
+                        fullpath = path + base_file + "/" + model_number +"/current/" + model_number + f"_revA{str(count)}.pdf"
+                        if os.path.exists(fullpath):
+                            return fullpath
+                            break
+                        elif count == 60:
+                            break
+                        count += 1
+                        print(fullpath)
+            except IndexError:
+                base_file = lookup(model_number)
+                fullpath = path + base_file + "/" + model_number +"/current/" + model_number + "_revA.pdf"
+                print(fullpath)
+                if os.path.exists(fullpath):
+                    return fullpath
+                else:
+                    count = 1
+                    while not os.path.exists(fullpath):
+                        fullpath = path + base_file + "/" + model_number +"/current/" + model_number + f"_revA{str(count)}.pdf"
+                        if os.path.exists(fullpath):
+                            return fullpath
+                            break
+                        elif count == 60:
+                            break
+                        count += 1
+                        print(fullpath)
 
         else:
             base_file = lookup(model_number)
-            full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA{file_ext}"
+            full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA.PDF"
             if os.path.exists(full_path):
                 return full_path
                 # openPath(full_path)
                 # extensive_Lookup(full_path, og_model)
             else:
-                print("Failed")
                 test = noFilePathHandling(model_number, file_ext)
                 return test
                 # extensive_Lookup(full_path)
             # open_web(model_number)
-
-
-# Opens given filepath
-def openPath(path):
-    subprocess.call(["xdg-open", path])
 
 
 def lookup(part_number):
@@ -304,18 +322,18 @@ def file_Open(model_number):
     path = "/media/sf_Z_DRIVE/Specs/"
     base_file = lookup(model_number)
     try:
-        full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA{file_ext}"
+        full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA.PDF"
         if os.path.exists(full_path):
             openPath(full_path)
         else:
             rev_counter = 1
             path = "/media/sf_Z_DRIVE/Specs/"
             base_file = lookup(model_number)
-            full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA{file_ext}"
+            full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA.PDF"
             half_path = path + base_file + "/" + model_number
             quater_path = path + base_file
             while not os.path.exists(full_path):
-                full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA{str(rev_counter)}{file_ext}"
+                full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA{str(rev_counter)}.PDF"
                 if rev_counter == 60:
                     last_Path = path + base_file + "/" + model_number + "/current"
                     if os.path.exists(last_Path):
@@ -360,7 +378,7 @@ def extensive_Lookup(pdf_file_path, og_model):
         array.remove(og_model)
     array = ''.join(array)
     array = pattern.findall(array)
-    while ('' in array):
+    while '' in array:
         array.remove('')
     for i in array:
         file_Open(i)
@@ -380,6 +398,8 @@ def open_web(model_number):
     cA = ["10", "12", "", "053"]
     # Different cat numbers lead to connectors.
     con = ["50", "55", "56", "60"]
+    # 51 will lead to push-pull-connectors
+    ppc = ["51"]
     if cat in cA:
         url = f"https://tensility.com/cable-assemblies/{model_number.lower()}"
         webbrowser.open(url)
@@ -395,23 +415,56 @@ def open_web(model_number):
     elif cat in con:
         url = f"https://tensility.com/connectors/{model_number}"
         webbrowser.open(url)
+    elif cat in ppc:
+        split = model_number.split(".")
+        split = ("-".join(split))
+        url = f"https://tensility.com/connectors/push-pull-connectors/{split}"
+        print(url)
+        webbrowser.open(url)
 
 
 # Uses the file path to look for picture.
 def open_picture(file_path, model_number):
-    file_path = file_path + "/pictures/web/" + model_number + ".JPG"
-    if os.path.exists(file_path):
+    #file_path = file_path + "/pictures/web/" + model_number + ".JPG"
+    if model_number.split('-')[0] == '12':
+        led_file_path = file_path + "/pictures/web/" + model_number + "_ON.JPG"
+        openPath(led_file_path)
+    elif os.path.exists(file_path):
+        file_path = file_path + "/pictures/web/" + model_number + ".JPG"
         openPath(file_path)
     else:
         file_path = file_path + "/pictures/web/" + model_number + ".jpg"
         openPath(file_path)
 
 
-def create_logs(error):
+def create_logs(error_message):
     log_path = "/home/tensility/Desktop/Scripts/Lookup/logs/logs.txt"
     if not os.path.exists(log_path):
         with open(log_path, 'x') as f:
-            f.write(f"Error {error}")
+            f.write(f"{error_message}")
     elif os.path.exists(log_path):
         logs = open(log_path, 'a')
-        logs.write(f"Error {error} \n")
+        logs.write(f"{error_message} \n")
+
+# Opens given filepath
+def openPath(path):
+    subprocess.call(["xdg-open", path])
+
+def version_control(version):
+    #Check current version compare to master version on server. If old version update files.
+    main_version_path = "/home/tensility/Documents/Lookup/version"
+    main_path = "/home/tensility/Documents/Lookup"
+    old_path = "/home/tensility/Desktop/nothing1"
+    main_version = float(open(main_version_path, "r").read())
+    version_path = "version"
+    version_file = open(version_path, 'r')
+    version_number = float(version_file.read())
+    print(float(version_number))
+    if main_version > version_number:
+        print("We need to update the program. Please wait...")
+        new_files = os.listdir(main_path)
+        print(new_files)
+        shutil.copytree(main_path, old_path, dirs_exist_ok=True)
+
+
+
