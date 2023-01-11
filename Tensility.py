@@ -156,6 +156,9 @@ class Ui_MainWindow(object):
                 rangefolder = lookup(endppc)
                 base = subpath + rangefolder +"/"+partSearch
                 openPath(base)
+            elif ppc[0] == "053":
+                base = classic_search(partSearch)
+                openPath(base)
             else:
                 rangefolder = lookup(partSearch)
                 base = subpath + rangefolder +'/'+partSearch

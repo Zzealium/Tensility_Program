@@ -21,3 +21,15 @@ TypeError None 04-01-2023 09:46:49
 TypeError None 04-01-2023 10:37:45 
 TypeError None 04-01-2023 10:41:10 
 TypeError None 04-01-2023 11:32:50 
+TypeError None 04-01-2023 12:39:40 
+/media/sf_Z_DRIVE/Specs/24-00101-24-00200 
+/media/sf_Z_DRIVE/Specs/24-00101-24-00200 
+/media/sf_Z_DRIVE/Specs/24-00101-24-00200 
+TypeError None 05-01-2023 13:58:18 
+TypeError None 05-01-2023 13:58:26 
+TypeError None 05-01-2023 13:58:42 
+/media/sf_Z_DRIVE/Specs/053-XXXX-553-XXXX/053-0111R (CA-254S)/current 
+/media/sf_Z_DRIVE/Specs/053-XXXX-553-XXXX/053-0232R (CLZ-85-3045)/current 
+/media/sf_Z_DRIVE/Specs/24-00301-24-00400 
+/media/sf_Z_DRIVE/Specs/24-00301-24-00400 
+/media/sf_Z_DRIVE/Specs/24-00301-24-00400 

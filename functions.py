@@ -13,7 +13,7 @@ def get_Path(model_number):
     rev = 1
     og_model = model_number.upper()
     counter = 0
-    file_ext = ".PDF"
+    file_ext = ".pdf"
     model_number = model_number.upper()
     model_Array = model_number.split()
 
@@ -32,7 +32,6 @@ def get_Path(model_number):
                 new_Path = classic_base_path + model_number + "/current/" + model_number + f"_revA{file_ext}"
                 if model_number == classic[0] and len(classic) <= 1:
                     if os.path.exists(new_Path):
-                        # openPath(new_Path) # This was used before GUI. Same with similar functions below.
                         return new_Path
                         break
                     else:
@@ -40,19 +39,16 @@ def get_Path(model_number):
                             new_Path = classic_base_path + model_number + "/current/" + model_number + f"_revA{rev}{file_ext}"
                             if rev == 60:
                                 last_Path = classic_base_path + model_number + "/current/"
-                                # openPath(last_Path)
                                 return last_Path
                                 break
                             if os.path.exists(new_Path):
                                 return new_Path
-                                # openPath(new_Path)
                                 break
                             rev += 1
                 elif len(classic) >= 2 and model_number == classic[0]:
                     ext_Path = classic_base_path + model_number + " " + classic[
                         1] + "/" + "current/" + model_number + f"_revA{file_ext}"
                     if os.path.exists(ext_Path):
-                        # openPath(ext_Path)
                         return ext_Path
                     else:
                         while not os.path.exists(ext_Path):
@@ -60,14 +56,11 @@ def get_Path(model_number):
                                 1] + "/" + "current/" + model_number + f"_revA{rev}{file_ext}"
                             if rev == 60:
                                 last_Path = classic_base_path + model_number + " " + classic[1] + "/current"
-                                # openPath(last_Path)
                                 create_logs(last_Path)
                                 return last_Path
                                 break
                             if os.path.exists(ext_Path):
                                 return ext_Path
-                                # openPath(ext_Path)
-                                # extensive_Lookup(ext_Path, model_number)
                             rev += 1
                 counter += 1
         elif pushpull == '51':
@@ -96,14 +89,14 @@ def get_Path(model_number):
                         print(fullpath)
             except IndexError:
                 base_file = lookup(model_number)
-                fullpath = path + base_file + "/" + model_number +"/current/" + model_number + "_revA.pdf"
+                fullpath = path + base_file + "/" + model_number + "/current/" + model_number + "_revA.pdf"
                 print(fullpath)
                 if os.path.exists(fullpath):
                     return fullpath
                 else:
                     count = 1
                     while not os.path.exists(fullpath):
-                        fullpath = path + base_file + "/" + model_number +"/current/" + model_number + f"_revA{str(count)}.pdf"
+                        fullpath = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA{str(count)}.pdf"
                         if os.path.exists(fullpath):
                             return fullpath
                             break
@@ -117,140 +110,32 @@ def get_Path(model_number):
             full_path = path + base_file + "/" + model_number + "/current/" + model_number + f"_revA.PDF"
             if os.path.exists(full_path):
                 return full_path
-                # openPath(full_path)
-                # extensive_Lookup(full_path, og_model)
+
             else:
                 test = noFilePathHandling(model_number, file_ext)
                 return test
-                # extensive_Lookup(full_path)
-            # open_web(model_number)
 
-
-def lookup(part_number):
-    count = 0
-    ext_index = [
-        [range(1, 101), "00001-00100"],
-        [range(101, 201), "00101-00200"],
-        [range(201, 301), "00201-00300"],
-        [range(301, 401), "00301-00400"],
-        [range(401, 501), "00401-00500"],
-        [range(501, 601), "00501-00600"],
-        [range(601, 701), "00601-00700"],
-        [range(701, 801), "00701-00800"],
-        [range(801, 901), "00801-00900"],
-        [range(901, 1001), "00901-01000"],
-        [range(1001, 1101), "01001-01100"],  # 10
-        [range(1101, 1201), "01101-01200"],
-        [range(1201, 1301), "01201-01300"],
-        [range(1301, 1401), "01301-01400"],
-        [range(1401, 1501), "01401-01500"],
-        [range(1501, 1601), "01501-01600"],
-        [range(1601, 1701), "01601-01700"],
-        [range(1701, 1801), "01701-01800"],
-        [range(1801, 1901), "01801-01900"],
-        [range(1901, 2001), "01901-02000"],
-        [range(2001, 2101), "02001-02100"],  # 20
-        [range(2101, 2201), "02101-02200"],
-        [range(2201, 2301), "02201-02300"],
-        [range(2301, 2401), "02301-02400"],
-        [range(2401, 2501), "02401-02500"],
-        [range(2501, 2601), "02501-02600"],
-        [range(2601, 2701), "02601-02700"],
-        [range(2701, 2801), "02701-02800"],
-        [range(2801, 2901), "02801-02900"],
-        [range(2901, 3001), "02901-03000"],
-        [range(3001, 3101), "03001-03100"],  # 30
-        [range(3101, 3201), "03101-03200"],
-        [range(3201, 3301), "03201-03300"],
-        [range(3301, 3401), "03301-03400"],
-        [range(3401, 3501), "03401-03500"],
-        [range(3501, 3601), "03501-03600"],
-        [range(3601, 3701), "03601-03700"],
-        [range(3701, 3801), "03701-03800"],
-        [range(3801, 3901), "03801-03900"],
-        [range(3901, 4001), "03901-04000"],
-        [range(4001, 4101), "04001-04100"],  # 40
-        [range(4101, 4201), "04101-04200"],
-        [range(4201, 4301), "04201-04300"],
-        [range(4301, 4401), "04301-04400"],
-        [range(4401, 4501), "04401-04500"],
-        [range(4501, 4601), "04501-04600"],
-        [range(4601, 4701), "04601-04700"],
-        [range(4701, 4801), "04701-04800"],
-        [range(4801, 4901), "04801-04900"],
-        [range(4901, 5001), "04901-05000"],
-        [range(5001, 5101), "05001-05100"],  # 50
-        [range(5101, 5201), "05101-05200"],
-        [range(5201, 5301), "05201-05300"],
-        [range(5301, 5401), "05301-05400"],
-        [range(5401, 5501), "05401-05500"],
-        [range(5501, 5601), "05501-05600"],
-        [range(5601, 5701), "05601-05700"],
-        [range(5701, 5801), "05701-05800"],
-        [range(5801, 5901), "05801-05900"],
-        [range(5901, 6001), "05901-06000"],
-        [range(6001, 6101), "06001-06100"],  # 60
-        [range(6101, 6201), "06101-06200"],
-        [range(6201, 6301), "06201-06300"],
-        [range(6301, 6401), "06301-06400"],
-        [range(6401, 6501), "06401-06500"],
-        [range(6501, 6601), "06501-06600"],
-        [range(6601, 6701), "06601-06700"],
-        [range(6701, 6801), "06701-06800"],
-        [range(6801, 6901), "06801-06900"],
-        [range(6901, 7001), "06901-07000"],
-        [range(7001, 7101), "07001-07100"],  # 70
-        [range(7101, 7201), "07101-07200"],
-        [range(7201, 7301), "07201-07300"],
-        [range(7301, 7401), "07301-07400"],
-        [range(7401, 7501), "07401-07500"],
-        [range(7501, 7601), "07501-07600"],
-        [range(7601, 7701), "07601-07700"],
-        [range(7701, 7801), "07701-07800"],
-        [range(7801, 7901), "07801-07900"],
-        [range(7901, 8001), "07901-08000"],
-        [range(8001, 8101), "08001-08100"],  # 80
-        [range(8101, 8201), "08101-08200"],
-        [range(8201, 8301), "08201-08300"],
-        [range(8301, 8401), "08301-08400"],
-        [range(8401, 8501), "08401-08500"],
-        [range(8501, 8601), "08501-08600"],
-        [range(8601, 8701), "08601-08700"],
-        [range(8701, 8801), "08701-08800"],
-        [range(8801, 8901), "08801-08900"],
-        [range(8901, 9001), "08901-09000"],
-        [range(9001, 9101), "09001-09100"],  # 90
-        [range(9101, 9201), "09101-09200"],
-        [range(9201, 9301), "09201-09300"],
-        [range(9301, 9401), "09301-09400"],
-        [range(9401, 9501), "09401-09500"],
-        [range(9501, 9601), "09501-09600"],
-        [range(9601, 9701), "09601-09700"],
-        [range(9701, 9801), "09701-09800"],
-        [range(9801, 9901), "09801-09900"],
-        [range(9901, 10001), "09901-10000"],
-        [range(10001, 10101), "10001-10100"]  # 100
-
-    ]
-    while True:
-        try:
-            p = ext_index[count]
-            partsplit = part_number.split("-")[1]
-            catnumber = part_number.split("-")[0]
-            if catnumber == "053":
-                break
-            ar = list(p[0])
-            if int(partsplit) not in ar:
-                count += 1
-            if int(partsplit) in ar:
-                split_ext = ext_index[count][1].split("-")
-                first = split_ext[0]
-                second = split_ext[1]
-                complete = catnumber + "-" + first + "-" + catnumber + "-" + second
-                return complete
-                break
-        except:
+def lookup(number):
+    path1 = "/media/sf_Z_DRIVE/Specs/"
+    pattern = re.compile(r"(\d\d-\d\d\d\d\d-\d\d-\d\d\d\d\d)?", re.IGNORECASE)
+    # Spot collects all the folder
+    spot = os.listdir(path1)
+    #This looks for the pattern above.
+    hope = pattern.findall(str(spot))
+    # Cleans the list of results form Regex
+    while '' in hope:
+        hope.remove('')
+    # Tries to match the input with a range.
+    for m in hope:
+        numbersplit = number.split("-")
+        complete = m
+        a = m.split("-")
+        val = range(int(a[1]), int(a[3]))
+        if int(numbersplit[1]) in val:
+            # returns folder name ie = 10-02301-10-2400
+            return complete
             break
+
 
 # Input to check if user is looking for spec or model.
 # This is not being used.
@@ -359,7 +244,7 @@ def file_Open(model_number):
 
 
 # Reads part number pdf and finds sub part numbers. Once found it opens pdfs on those sub parts.
-def extensive_Lookup(pdf_file_path, og_model):
+def extensive_Lookup(pdf_file_path, og_model, qa=False):
     openPath(pdf_file_path)
     pattern = re.compile(r"(\d\d-\d\d\d\d\d)?", re.IGNORECASE)
     doc = fitz.open(pdf_file_path)
@@ -380,9 +265,35 @@ def extensive_Lookup(pdf_file_path, og_model):
     array = pattern.findall(array)
     while '' in array:
         array.remove('')
+    array = list(set(array))
     for i in array:
+        if qa:
+            continue
         file_Open(i)
+    if qa:
+        return separate_array(array)
 
+# Separates the list of parts into their categories
+# The == 50 needs to be worked on. we have 54, 55, and so on for cons.
+def separate_array(array):
+    print(array)
+    array = list(set(array))
+    count = 0
+    con = []
+    mold = []
+    wire = []
+    for i in array:
+        cat = i.split('-')
+        print(cat)
+        if cat[0] == '30':
+            wire.append(i)
+        elif cat[0] == '50':
+            con.append(i)
+        elif cat[0] == '24':
+            mold.append(i)
+        count += 1
+    print(f"This is wire {wire}")
+    return con, mold, wire
 
 # Simple regex for locating part numbers.
 def use_regex(input_text):
@@ -450,11 +361,11 @@ def create_logs(error_message):
 def openPath(path):
     subprocess.call(["xdg-open", path])
 
+# WIP
 def version_control(version):
     #Check current version compare to master version on server. If old version update files.
     main_version_path = "/home/tensility/Documents/Lookup/version"
     main_path = "/home/tensility/Documents/Lookup"
-    old_path = "/home/tensility/Desktop/nothing1"
     main_version = float(open(main_version_path, "r").read())
     version_path = "version"
     version_file = open(version_path, 'r')
@@ -467,4 +378,16 @@ def version_control(version):
         shutil.copytree(main_path, old_path, dirs_exist_ok=True)
 
 
-
+def classic_search(model_number):
+    path = "/media/sf_Z_DRIVE/Specs/"
+    classic_base_path = path + "053-XXXX-553-XXXX/"
+    classic_list = os.listdir(classic_base_path)
+    print(model_number)
+    for i in classic_list:
+        classic_split = i.split()
+        print(classic_split[0])
+        if classic_split[0] == model_number.upper():
+            ending = " ".join(classic_split)
+            print(classic_base_path + ending)
+            return classic_base_path + ending
+            break
